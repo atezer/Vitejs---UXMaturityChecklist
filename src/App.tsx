@@ -5,7 +5,7 @@ function App() {
   return (
     <>
       <UXMaturityChecklist />
-      <small>ATezer</small>
+      <small>atezer.design</small>
     </>
   );
 }
