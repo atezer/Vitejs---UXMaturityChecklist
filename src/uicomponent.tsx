@@ -220,7 +220,7 @@ const UXMaturityChecklist = () => {
               <BarChart data={rioData} layout="vertical">
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis type="number" domain={[0, 100]} />
-                <YAxis dataKey="phase" type="category" />
+                <YAxis dataKey="phase" type="category" width={70}/>
                 <Tooltip />
                 <Legend />
                 <Bar dataKey="completed" fill="#4f46e5" name="Tamamlanan" />
