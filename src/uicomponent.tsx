@@ -1,120 +1,106 @@
 import { useState } from 'react';
-import { Card, CardHeader, CardTitle, CardContent } from './components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from './components/ui/card';
 import { Checkbox } from './components/ui/checkbox';
 import {
-  RadarChart,
-  PolarGrid,
-  PolarAngleAxis,
-  Radar,
-  ResponsiveContainer,
-  BarChart,
   Bar,
+  BarChart,
+  CartesianGrid,
+  Legend,
+  PolarAngleAxis,
+  PolarGrid,
+  Radar,
+  RadarChart,
+  ResponsiveContainer,
+  Tooltip,
   XAxis,
   YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
 } from 'recharts';
 import { AlertCircle } from 'lucide-react';
 
+interface Task {
+  id: string;
+  text: string;
+  checked: boolean;
+  label: string; // New label property
+}
+
+interface ChecklistLevel {
+  tasks: Task[];
+  completed: number;
+}
+
+interface ChecklistData {
+  [key: number]: ChecklistLevel;
+}
+
 const UXMaturityChecklist = () => {
-  const [checklistData, setChecklistData] = useState({
+  const [checklistData, setChecklistData] = useState<ChecklistData>({
     1: {
-      // Absent (Yok)
       tasks: [
-        { id: '1-1', text: 'UX kavramlarını öğrenme', checked: false },
-        {
-          id: '1-2',
-          text: 'Temel kullanıcı ihtiyaçlarını belirleme',
-          checked: false,
-        },
-        { id: '1-3', text: 'UX araştırma metodlarını öğrenme', checked: false },
+        { id: '1-1', text: 'UX kavramlarını öğrenme', checked: false, label: 'Kullanıcı Araştırma' },
+        { id: '1-2', text: 'Temel kullanıcı ihtiyaçlarını belirleme', checked: false, label: 'Kullanıcı Araştırma' },
+        { id: '1-3', text: 'UX araştırma metodlarını öğrenme', checked: false, label: 'Kullanıcı Araştırma' },
       ],
       completed: 0,
     },
     2: {
-      // Limited (Sınırlı)
       tasks: [
-        {
-          id: '2-1',
-          text: 'Basit kullanıcı görüşmeleri yapma',
-          checked: false,
-        },
-        {
-          id: '2-2',
-          text: 'Temel tasarım prensiplerini uygulama',
-          checked: false,
-        },
-        { id: '2-3', text: 'Kullanıcı personaları oluşturma', checked: false },
-        { id: '2-4', text: 'Basit prototipleme çalışmaları', checked: false },
+        { id: '2-1', text: 'Basit kullanıcı görüşmeleri yapma', checked: false, label: 'Kullanıcı Araştırma' },
+        { id: '2-2', text: 'Temel tasarım prensiplerini uygulama', checked: false, label: 'Tasarım Sistemi' },
+        { id: '2-3', text: 'Kullanıcı personaları oluşturma', checked: false, label: 'Kullanıcı Araştırma' },
+        { id: '2-4', text: 'Basit prototipleme çalışmaları', checked: false, label: 'Tasarım Sistemi' },
       ],
       completed: 0,
     },
     3: {
-      // Emergent (Ortaya Çıkan)
       tasks: [
-        { id: '3-1', text: 'Düzenli kullanıcı testleri yapma', checked: false },
-        { id: '3-2', text: 'Veri odaklı kararlar alma', checked: false },
-        { id: '3-3', text: 'Design system temelleri', checked: false },
-        { id: '3-4', text: 'UX metrikleri belirleme', checked: false },
-        { id: '3-5', text: 'Düzenli ekip toplantıları', checked: false },
+        { id: '3-1', text: 'Düzenli kullanıcı testleri yapma', checked: false, label: 'Test & Ölçüm' },
+        { id: '3-2', text: 'Veri odaklı kararlar alma', checked: false, label: 'Test & Ölçüm' },
+        { id: '3-3', text: 'Design system temelleri', checked: false, label: 'Tasarım Sistemi' },
+        { id: '3-4', text: 'UX metrikleri belirleme', checked: false, label: 'Test & Ölçüm' },
+        { id: '3-5', text: 'Düzenli ekip toplantıları', checked: false, label: 'Süreç Yönetimi' },
       ],
       completed: 0,
     },
     4: {
-      // Structured (Yapılandırılmış)
       tasks: [
-        { id: '4-1', text: 'Kapsamlı UX araştırma planı', checked: false },
-        { id: '4-2', text: 'A/B testleri uygulama', checked: false },
-        { id: '4-3', text: 'Kullanıcı yolculuğu haritaları', checked: false },
-        { id: '4-4', text: 'Design system dokümantasyonu', checked: false },
-        { id: '4-5', text: 'UX süreç dokümantasyonu', checked: false },
+        { id: '4-1', text: 'Kapsamlı UX araştırma planı', checked: false, label: 'Kullanıcı Araştırma' },
+        { id: '4-2', text: 'A/B testleri uygulama', checked: false, label: 'Test & Ölçüm' },
+        { id: '4-3', text: 'Kullanıcı yolculuğu haritaları', checked: false, label: 'Tasarım Sistemi' },
+        { id: '4-4', text: 'Design system dokümantasyonu', checked: false, label: 'Tasarım Sistemi' },
+        { id: '4-5', text: 'UX süreç dokümantasyonu', checked: false, label: 'Süreç Yönetimi' },
       ],
       completed: 0,
     },
     5: {
-      // Integrated (Entegre)
       tasks: [
-        {
-          id: '5-1',
-          text: 'Çok kanallı kullanıcı araştırması',
-          checked: false,
-        },
-        { id: '5-2', text: 'Otomatik test sistemleri', checked: false },
-        { id: '5-3', text: 'Sürekli kullanıcı geri bildirimi', checked: false },
-        { id: '5-4', text: 'UX KPI takibi', checked: false },
-        {
-          id: '5-5',
-          text: 'Cross-functional ekip entegrasyonu',
-          checked: false,
-        },
+        { id: '5-1', text: 'Çok kanallı kullanıcı araştırması', checked: false, label: 'Kullanıcı Araştırma' },
+        { id: '5-2', text: 'Otomatik test sistemleri', checked: false, label: 'Test & Ölçüm' },
+        { id: '5-3', text: 'Sürekli kullanıcı geri bildirimi', checked: false, label: 'Kullanıcı Araştırma' },
+        { id: '5-4', text: 'UX KPI takibi', checked: false, label: 'Test & Ölçüm' },
+        { id: '5-5', text: 'Cross-functional ekip entegrasyonu', checked: false, label: 'Ekip Yetkinliği' },
       ],
       completed: 0,
     },
     6: {
-      // User-Driven (Kullanıcı Odaklı)
       tasks: [
-        {
-          id: '6-1',
-          text: 'Kullanıcı odaklı inovasyon süreci',
-          checked: false,
-        },
-        { id: '6-2', text: 'İleri düzey veri analitiği', checked: false },
-        { id: '6-3', text: 'UX stratejisi ve vizyonu', checked: false },
-        { id: '6-4', text: 'Sürekli iyileştirme kültürü', checked: false },
-        { id: '6-5', text: 'Global UX standartları', checked: false },
+        { id: '6-1', text: 'Kullanıcı odaklı inovasyon süreci', checked: false, label: 'İnovasyon' },
+        { id: '6-2', text: 'İleri düzey veri analitiği', checked: false, label: 'İnovasyon' },
+        { id: '6-3', text: 'UX stratejisi ve vizyonu', checked: false, label: 'İnovasyon' },
+        { id: '6-4', text: 'Sürekli iyileştirme kültürü', checked: false, label: 'İnovasyon' },
+        { id: '6-5', text: 'Global UX standartları', checked: false, label: 'İnovasyon' },
       ],
       completed: 0,
     },
   });
 
   const [maturityData, setMaturityData] = useState([
-    { subject: 'Kullanıcı Araştırma', A: 1, fullMark: 6 },
-    { subject: 'Tasarım Sistemi', A: 1, fullMark: 6 },
-    { subject: 'Test & Ölçüm', A: 1, fullMark: 6 },
-    { subject: 'Süreç Yönetimi', A: 1, fullMark: 6 },
-    { subject: 'Ekip Yetkinliği', A: 1, fullMark: 6 },
-    { subject: 'İnovasyon', A: 1, fullMark: 6 },
+    { subject: 'Kullanıcı Araştırma', A: 1, fullMark: 6, label:'Kullanıcı Araştırma' },
+    { subject: 'Tasarım Sistemi', A: 1, fullMark: 6, label:'Tasarım Sistemi' },
+    { subject: 'Test & Ölçüm', A: 1, fullMark: 6, label:'Test & Ölçüm' },
+    { subject: 'Süreç Yönetimi', A: 1, fullMark: 6, label:'Süreç Yönetimi' },
+    { subject: 'Ekip Yetkinliği', A: 1, fullMark: 6, label:'Ekip Yetkinliği' },
+    { subject: 'İnovasyon', A: 1, fullMark: 6, label:'İnovasyon' },
   ]);
 
   const [rioData, setRioData] = useState([
@@ -123,8 +109,8 @@ const UXMaturityChecklist = () => {
     { phase: 'Output', completed: 0, target: 100 },
   ]);
 
-  const handleCheckboxChange = (levelId, taskId) => {
-    const newData = { ...checklistData };
+  const handleCheckboxChange = (levelId: number, taskId: string) => {
+    const newData: ChecklistData = { ...checklistData };
     const taskIndex = newData[levelId].tasks.findIndex(
       (task) => task.id === taskId
     );
@@ -142,11 +128,11 @@ const UXMaturityChecklist = () => {
     updateCharts(newData);
   };
 
-  const updateCharts = (data) => {
+  const updateCharts = (data: ChecklistData) => {
     // Update Radar Chart
     const newMaturityData = maturityData.map((item) => ({
       ...item,
-      A: calculateMaturityLevel(data),
+      A: calculateMaturityLevel(data)[item.subject] || 0,
     }));
     setMaturityData(newMaturityData);
 
@@ -158,20 +144,32 @@ const UXMaturityChecklist = () => {
     setRioData(newRioData);
   };
 
-  const calculateMaturityLevel = (data) => {
-    let totalCompletion = 0;
-    let levels = Object.keys(data).length;
+  const calculateMaturityLevel = (data: ChecklistData) => {
+    const labelCompletion: { [label: string]: number[] } = {};
 
+    // Aggregate completion percentages by label
     for (let level in data) {
-      totalCompletion += data[level].completed / 100;
+      data[level].tasks.forEach((task) => {
+        if (!labelCompletion[task.label]) {
+          labelCompletion[task.label] = [];
+        }
+        labelCompletion[task.label].push(data[level].completed);
+      });
     }
 
-    return (totalCompletion / levels) * 6; // Scale to 6 levels
+    // Calculate average completion for each label
+    const labelAverages: { [label: string]: number } = {};
+    for (let label in labelCompletion) {
+      const total = labelCompletion[label].reduce((sum, value) => sum + value, 0);
+      labelAverages[label] = total / labelCompletion[label].length;
+    }
+
+    return labelAverages;
   };
 
-  const calculateRioCompletion = (data, phase) => {
+  const calculateRioCompletion = (data: ChecklistData, phase: string) => {
     // Map phases to relevant level ranges
-    const phaseRanges = {
+    const phaseRanges: { [key: string]: [number, number] } = {
       Research: [1, 2],
       Ideation: [3, 4],
       Output: [5, 6],
@@ -241,17 +239,7 @@ const UXMaturityChecklist = () => {
                   <div className="flex items-center space-x-2">
                     <AlertCircle className="text-indigo-500" size={16} />
                     <h3 className="text-lg font-semibold">
-                      Seviye {level}:{' '}
-                      {
-                        [
-                          'Absent (Yok)',
-                          'Limited (Sınırlı)',
-                          'Emergent (Ortaya Çıkan)',
-                          'Structured (Yapılandırılmış)',
-                          'Integrated (Entegre)',
-                          'User-Driven (Kullanıcı Odaklı)',
-                        ][level - 1]
-                      }
+                      {/* ... */}
                     </h3>
                   </div>
                   <span className="text-sm bg-indigo-100 text-indigo-800 px-2 py-1 rounded">
@@ -259,22 +247,20 @@ const UXMaturityChecklist = () => {
                   </span>
                 </div>
                 <div className="space-y-3">
-                  {tasks.map((task) => (
-                    <div key={task.id} className="flex items-center space-x-2">
-                      <Checkbox
-                        id={task.id}
-                        checked={task.checked}
-                        onCheckedChange={() =>
-                          handleCheckboxChange(level, task.id)
-                        }
-                      />
-                      <label
-                        htmlFor={task.id}
-                        className="text-sm text-gray-700 cursor-pointer"
-                      >
-                        {task.text}
-                      </label>
-                    </div>
+                  {tasks.map((task: Task) => (
+                      <div key={task.id} className="flex items-center space-x-2">
+                        <Checkbox
+                            id={task.id}
+                            checked={task.checked}
+                            onCheckedChange={() => handleCheckboxChange(parseInt(level), task.id)}
+                        />
+                        <label
+                            htmlFor={task.id}
+                            className="text-sm text-gray-700 cursor-pointer"
+                        >
+                          {task.text}
+                        </label>
+                      </div>
                   ))}
                 </div>
               </div>
