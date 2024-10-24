@@ -106,9 +106,9 @@ const UXMaturityChecklist = () => {
   ]);
 
   const [rioData, setRioData] = useState([
-    { phase: 'Research', completed: 0, target: 100 },
-    { phase: 'Ideation', completed: 0, target: 100 },
-    { phase: 'Output', completed: 0, target: 100 },
+    { phase: 'Araştırmalar', completed: 0, target: 100 },
+    { phase: 'Çözümler', completed: 0, target: 100 },
+    { phase: 'Çıktılar', completed: 0, target: 100 },
   ]);
 
   const handleCheckboxChange = (levelId: number, taskId: string) => {
@@ -172,9 +172,9 @@ const UXMaturityChecklist = () => {
   const calculateRioCompletion = (data: ChecklistData, phase: string) => {
     // Map phases to relevant level ranges
     const phaseRanges: { [key: string]: [number, number] } = {
-      Research: [1, 2],
-      Ideation: [3, 4],
-      Output: [5, 6],
+      Araştırmalar: [1, 2],
+      Çözümler: [3, 4],
+      Çıktılar: [5, 6],
     };
 
     const [startLevel, endLevel] = phaseRanges[phase];
@@ -222,7 +222,7 @@ const UXMaturityChecklist = () => {
               <BarChart data={rioData} layout="vertical">
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis type="number" domain={[0, 100]} />
-                <YAxis dataKey="phase" type="category" width={70}/>
+                <YAxis dataKey="phase" type="category" width={90}/>
                 <Tooltip />
                 <Legend />
                 <Bar dataKey="completed" fill="#251bc3" name="Tamamlanan" />
