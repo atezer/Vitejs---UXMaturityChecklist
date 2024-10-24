@@ -226,7 +226,7 @@ const UXMaturityChecklist = () => {
                 <Tooltip />
                 <Legend />
                 <Bar dataKey="completed" fill="#251bc3" name="Tamamlanan" />
-                <Bar dataKey="target" fill="#8f89ee" name="Hedef" />
+                <Bar dataKey="target" fill="#a39ff2" name="Hedef" />
               </BarChart>
             </ResponsiveContainer>
           </div>
