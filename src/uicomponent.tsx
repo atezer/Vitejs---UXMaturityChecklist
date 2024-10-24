@@ -239,7 +239,11 @@ const UXMaturityChecklist = () => {
                   <div className="flex items-center space-x-2">
                     <AlertCircle className="text-indigo-500" size={16} />
                     <h3 className="text-lg font-semibold">
-                      {/* ... */}
+                      Seviye {level}: {
+                      ['Absent (Yok)', 'Limited (Sınırlı)', 'Emergent (Ortaya Çıkan)',
+                       'Structured (Yapılandırılmış)', 'Integrated (Entegre)', 
+                       'User-Driven (Kullanıcı Odaklı)'][level-1]
+                    }
                     </h3>
                   </div>
                   <span className="text-sm bg-indigo-100 text-indigo-800 px-2 py-1 rounded">
