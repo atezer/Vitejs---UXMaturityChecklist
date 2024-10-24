@@ -215,7 +215,7 @@ const UXMaturityChecklist = () => {
 
           {/* RIO Chart */}
           <div className="bg-gray-50 p-4 rounded-lg">
-            <h3 className="text-lg font-semibold mb-4">RIO İlerleme Durumu</h3>
+            <h3 className="text-lg font-semibold mb-4">ROI "Return on Investment" İlerleme Durumu</h3>
             <ResponsiveContainer width="100%" height={300}>
               <BarChart data={rioData} layout="vertical">
                 <CartesianGrid strokeDasharray="3 3" />
