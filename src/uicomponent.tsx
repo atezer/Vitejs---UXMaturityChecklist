@@ -59,6 +59,7 @@ const UXMaturityChecklist = () => {
         { id: '3-3', text: 'Design system temelleri', checked: false, label: 'Tasarım Sistemi' },
         { id: '3-4', text: 'UX metrikleri belirleme', checked: false, label: 'Test & Ölçüm' },
         { id: '3-5', text: 'Düzenli ekip toplantıları', checked: false, label: 'Süreç Yönetimi' },
+        { id: '3-6', text: 'Dönüşüm Oranı Optimizasyonu (CRO)', checked: false, label: 'Test & Ölçüm' },
       ],
       completed: 0,
     },
