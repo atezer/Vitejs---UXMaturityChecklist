@@ -89,6 +89,7 @@ const UXMaturityChecklist = () => {
         { id: '6-3', text: 'UX stratejisi ve vizyonu', checked: false, label: 'İnovasyon' },
         { id: '6-4', text: 'Sürekli iyileştirme kültürü', checked: false, label: 'İnovasyon' },
         { id: '6-5', text: 'Global UX standartları', checked: false, label: 'İnovasyon' },
+        { id: '6-6', text: 'Erişilebilirlik iyileştirmeleri', checked: false, label: 'İnovasyon' },
       ],
       completed: 0,
     },
