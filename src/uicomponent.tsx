@@ -225,8 +225,8 @@ const UXMaturityChecklist = () => {
                 <YAxis dataKey="phase" type="category" width={70}/>
                 <Tooltip />
                 <Legend />
-                <Bar dataKey="completed" fill="#4f46e5" name="Tamamlanan" />
-                <Bar dataKey="target" fill="#e5e7eb" name="Hedef" />
+                <Bar dataKey="completed" fill="#251bc3" name="Tamamlanan" />
+                <Bar dataKey="target" fill="#8f89ee" name="Hedef" />
               </BarChart>
             </ResponsiveContainer>
           </div>
