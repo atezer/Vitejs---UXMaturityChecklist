@@ -186,7 +186,7 @@ const UXMaturityChecklist = () => {
   };
 
   return (
-    <Card className="w-full max-w-6xl p-6">
+    <Card className="w-full p-6">
       <CardHeader>
         <CardTitle className="text-2xl mb-4">
           UX Olgunluk Kontrol Listesi
