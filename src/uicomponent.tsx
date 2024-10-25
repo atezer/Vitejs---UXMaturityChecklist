@@ -15,7 +15,7 @@ import {
   XAxis,
   YAxis,
 } from 'recharts';
-import { AlertCircle } from 'lucide-react';
+import {AlertCircle, BadgeInfoIcon} from 'lucide-react';
 
 interface Task {
   id: string;
@@ -54,7 +54,7 @@ const UXMaturityChecklist = () => {
     },
     3: {
       tasks: [
-        { id: '3-1', text: 'Düzenli kullanıcı testleri yapma: ullanıcıların tasarımla etkileşimlerini izleme ve geri bildirim toplama.', checked: false, label: 'Test & Ölçüm' },
+        { id: '3-1', text: 'Düzenli kullanıcı testleri yapma: Kullanıcıların tasarımla etkileşimlerini izleme ve geri bildirim toplama.', checked: false, label: 'Test & Ölçüm' },
         { id: '3-2', text: 'Veri odaklı kararlar alma: Tasarım kararlarını kullanıcılardan toplanan verilere dayandırma.', checked: false, label: 'Test & Ölçüm' },
         { id: '3-3', text: 'Design system temelleri: Tekrarlanabilir ve ölçeklenebilir bir tasarım sistemi oluşturma.', checked: false, label: 'Tasarım Sistemi' },
         { id: '3-4', text: 'UX metrikleri belirleme: UX performansını değerlendirmek için ölçütler oluşturma.', checked: false, label: 'Test & Ölçüm' },
@@ -172,9 +172,9 @@ const UXMaturityChecklist = () => {
   const calculateRioCompletion = (data: ChecklistData, phase: string) => {
     // Map phases to relevant level ranges
     const phaseRanges: { [key: string]: [number, number] } = {
-      Araştırmalar: [1, 2],
-      Çözümler: [3, 4],
-      Çıktılar: [5, 6],
+      "Araştırmalar": [1, 2],
+      "Çözümler": [3, 4],
+      "Çıktılar": [5, 6],
     };
 
     const [startLevel, endLevel] = phaseRanges[phase];
@@ -239,12 +239,13 @@ const UXMaturityChecklist = () => {
               <div key={level} className="bg-gray-50 p-4 rounded-lg">
                 <div className="flex items-center justify-between mb-4">
                   <div className="flex items-center space-x-2">
-                    <AlertCircle className="text-indigo-500" size={16} />
+                    <BadgeInfoIcon className="text-indigo-500" size={16} />
                     <h3 className="text-lg font-semibold">
+
                       Seviye {level}: {
                       ['Absent (Yok)', 'Limited (Sınırlı)', 'Emergent (Ortaya Çıkan)',
                        'Structured (Yapılandırılmış)', 'Integrated (Entegre)',
-                       'User-Driven (Kullanıcı Odaklı)'][level-1]
+                       'User-Driven (Kullanıcı Odaklı)'][(parseInt(level) - 1)]
                     }
                     </h3>
                   </div>
@@ -264,7 +265,7 @@ const UXMaturityChecklist = () => {
                             htmlFor={task.id}
                             className="text-sm text-gray-700 cursor-pointer"
                         >
-                          <strong>{task.text.split(': ')[1]}:</strong> {task.text.split(': ')[0]}
+                          <strong>{task.text.split(': ')[0]}:</strong> {task.text.split(': ')[1]}
                         </label>
                       </div>
                   ))}
