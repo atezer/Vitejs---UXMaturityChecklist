@@ -1,6 +1,11 @@
 import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from './components/ui/card';
 import { Checkbox } from './components/ui/checkbox';
+import * as Tooltip from "@radix-ui/react-tooltip";
+import "./tooltip-style.css";
+
+
+
 import {
   Bar,
   BarChart,
@@ -11,11 +16,11 @@ import {
   Radar,
   RadarChart,
   ResponsiveContainer,
-  Tooltip,
+  Tooltip as ChartTooltip,
   XAxis,
   YAxis,
 } from 'recharts';
-import {AlertCircle, BadgeInfoIcon} from 'lucide-react';
+import {BadgeInfoIcon} from 'lucide-react';
 
 interface Task {
   id: string;
@@ -111,6 +116,33 @@ const UXMaturityChecklist = () => {
     { phase: 'Çıktılar', completed: 0, target: 100 },
   ]);
 
+  const titleExplanation = [
+    {
+      title: 'Absent (Yok)',
+      explanation: 'Bu seviyede ekipler, UX kavramlarını öğrenmeye başlar. Kullanıcı ihtiyaçlarını anlama ve UX araştırma yöntemlerini öğrenme aşamasındadırlar.'
+    },
+    {
+        title: 'Limited (Sınırlı)',
+        explanation: 'Basit kullanıcı görüşmeleri ve tasarım prensiplerini uygulama başlar. Kullanıcı personası ve prototip oluşturma konularında temel kazanımlar elde edilir.'
+    },
+    {
+        title: 'Emergent (Ortaya Çıkan)',
+        explanation: 'Ekipler düzenli kullanıcı testleri yapmaya başlar. Veri odaklı kararlar, metrik belirleme ve CRO uygulanır.'
+    },
+    {
+        title: 'Structured (Yapılandırılmış)',
+        explanation: 'Kapsamlı UX araştırma planı, A/B testleri ve kullanıcı yolculuğu haritaları oluşturulur. Design system ve UX süreçleri belgelendirilir.'
+    },
+    {
+        title: 'Integrated (Entegre)',
+        explanation: 'Çok kanallı araştırma ve otomatik test sistemleri devreye alınır. Sürekli geri bildirim ve UX KPI’ları izlenir.'
+    },
+    {
+        title: 'User-Driven (Kullanıcı Odaklı)',
+        explanation: 'Kullanıcı odaklı inovasyon süreçleri uygulanır. İleri veri analitiği, global UX standartları ve erişilebilirlik iyileştirmeleri gerçekleştirilir.'
+    }
+  ]
+
   const handleCheckboxChange = (levelId: number, taskId: string) => {
     const newData: ChecklistData = { ...checklistData };
     const taskIndex = newData[levelId].tasks.findIndex(
@@ -163,7 +195,7 @@ const UXMaturityChecklist = () => {
     const labelAverages: { [label: string]: number } = {};
     for (let label in labelCompletion) {
       const total = labelCompletion[label].reduce((sum, value) => sum + value, 0);
-      labelAverages[label] = total / labelCompletion[label].length;
+      labelAverages[label] = Math.round(total / labelCompletion[label].length);
     }
 
     return labelAverages;
@@ -183,10 +215,10 @@ const UXMaturityChecklist = () => {
     for (let i = startLevel; i <= endLevel; i++) {
       phaseCompletion += data[i].completed;
     }
-
-    return phaseCompletion / 2; // Average of the two levels
+    return Math.round(phaseCompletion / 2); // Average of the two levels
   };
 
+  // @ts-ignore
   return (
     <Card className="w-full p-6">
       <CardHeader>
@@ -210,20 +242,41 @@ const UXMaturityChecklist = () => {
                   fill="#4f46e5"
                   fillOpacity={0.6}
                 />
-                <Tooltip />
+                <ChartTooltip />
               </RadarChart>
             </ResponsiveContainer>
           </div>
 
           {/* RIO Chart */}
           <div className="bg-gray-50 p-4 rounded-lg">
-            <h3 className="text-lg font-semibold mb-4">ROI "Return on Investment" İlerleme Durumu</h3>
+            <div className="flex items-start justify-start">
+              <h3 className="text-lg font-semibold mb-4">ROI "Return on Investment" İlerleme Durumu</h3>
+              <Tooltip.Provider delayDuration={0}>
+                <Tooltip.Root>
+                  <Tooltip.Trigger asChild>
+                    <BadgeInfoIcon className="text-indigo-500 mt-2 ml-3 cursor-pointer" size={16}/>
+                  </Tooltip.Trigger>
+                  <Tooltip.Portal>
+                    <Tooltip.Content className="TooltipContent" sideOffset={5}>
+                      (ROI) ilerleme durumu %100’e ulaştığında, proje veya süreç tüm hedeflerine başarıyla ulaşmış
+                      olacaktır. Bu, yapılan yatırımların beklenen getirileri sağladığı anlamına gelir. Araştırmalar,
+                      çözümler ve çıktılar aşamalarında gerekli iyileştirmeler ve optimizasyonlar tamamlanmıştır. Sonuç
+                      olarak, UX iyileştirme süreçleri tam verimle çalışıyor, müşteri memnuniyeti artmış, kullanıcı
+                      deneyimi güçlendirilmiş ve iş hedeflerine ulaşılmış demektir. Bu kazanımlar, daha iyi kullanıcı
+                      dönüşüm oranları ve yüksek iş performansını beraberinde getirir.
+                      <Tooltip.Arrow className="TooltipArrow"/>
+                    </Tooltip.Content>
+                  </Tooltip.Portal>
+                </Tooltip.Root>
+              </Tooltip.Provider>
+            </div>
+
             <ResponsiveContainer width="100%" height={300}>
               <BarChart data={rioData} layout="vertical">
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis type="number" domain={[0, 100]} />
                 <YAxis dataKey="phase" type="category" width={90}/>
-                <Tooltip />
+                <ChartTooltip />
                 <Legend />
                 <Bar dataKey="completed" fill="#251bc3" name="Tamamlanan" />
                 <Bar dataKey="target" fill="#a39ff2" name="Hedef" />
@@ -239,22 +292,30 @@ const UXMaturityChecklist = () => {
               <div key={level} className="bg-gray-50 p-4 rounded-lg">
                 <div className="flex items-center justify-between mb-4">
                   <div className="flex items-center space-x-2">
-                    <BadgeInfoIcon className="text-indigo-500" size={16} />
                     <h3 className="text-lg font-semibold">
-
-                      Seviye {level}: {
-                      ['Absent (Yok)', 'Limited (Sınırlı)', 'Emergent (Ortaya Çıkan)',
-                       'Structured (Yapılandırılmış)', 'Integrated (Entegre)',
-                       'User-Driven (Kullanıcı Odaklı)'][(parseInt(level) - 1)]
-                    }
+                      Seviye {level}: {titleExplanation[parseInt(level) - 1].title}
                     </h3>
+                    <Tooltip.Provider delayDuration={0}>
+                      <Tooltip.Root>
+                        <Tooltip.Trigger asChild>
+                          <BadgeInfoIcon className="text-indigo-500 ml-3 cursor-pointer" size={16}/>
+                        </Tooltip.Trigger>
+                        <Tooltip.Portal>
+                          <Tooltip.Content className="TooltipContent" sideOffset={5}>
+                            {titleExplanation[parseInt(level) - 1].explanation}
+                            <Tooltip.Arrow className="TooltipArrow"/>
+                          </Tooltip.Content>
+                        </Tooltip.Portal>
+                      </Tooltip.Root>
+                    </Tooltip.Provider>
+
                   </div>
                   <span className="text-sm bg-indigo-100 text-indigo-800 px-2 py-1 rounded">
                     {completed.toFixed(0)}% Tamamlandı
                   </span>
                 </div>
                 <div className="space-y-3">
-                  {tasks.map((task: Task) => (
+                {tasks.map((task: Task) => (
                       <div key={task.id} className="flex items-center space-x-2">
                         <Checkbox
                             id={task.id}

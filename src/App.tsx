@@ -1,10 +1,11 @@
 import UXMaturityChecklist from './uicomponent';
 import './App.css';
 
+
 function App() {
   return (
     <>
-      <UXMaturityChecklist />
+        <UXMaturityChecklist />
       <small>___ atezer.design ___</small>
     </>
   );
