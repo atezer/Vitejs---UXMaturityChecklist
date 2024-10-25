@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from './components/ui/card';
 import { Checkbox } from './components/ui/checkbox';
 import {
@@ -243,7 +243,7 @@ const UXMaturityChecklist = () => {
                     <h3 className="text-lg font-semibold">
                       Seviye {level}: {
                       ['Absent (Yok)', 'Limited (Sınırlı)', 'Emergent (Ortaya Çıkan)',
-                       'Structured (Yapılandırılmış)', 'Integrated (Entegre)', 
+                       'Structured (Yapılandırılmış)', 'Integrated (Entegre)',
                        'User-Driven (Kullanıcı Odaklı)'][level-1]
                     }
                     </h3>
@@ -264,7 +264,7 @@ const UXMaturityChecklist = () => {
                             htmlFor={task.id}
                             className="text-sm text-gray-700 cursor-pointer"
                         >
-                          {task.text}
+                          <strong>{task.text.split(': ')[1]}:</strong> {task.text.split(': ')[0]}
                         </label>
                       </div>
                   ))}
