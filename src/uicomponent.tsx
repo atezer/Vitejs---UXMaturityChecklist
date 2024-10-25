@@ -228,21 +228,43 @@ const UXMaturityChecklist = () => {
       </CardHeader>
       <CardContent>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
-          {/* Radar Chart */}
+
           <div className="bg-gray-50 p-4 rounded-lg">
-            <h3 className="text-lg font-semibold mb-4">UX Olgunluk Düzeyi</h3>
+            <div className="flex items-start justify-start">
+              <h3 className="text-lg font-semibold mb-4">UX Olgunluk Düzeyi</h3>
+              <Tooltip.Provider delayDuration={0}>
+                <Tooltip.Root>
+                  <Tooltip.Trigger asChild>
+                    <BadgeInfoIcon className="text-indigo-500 mt-2 ml-3 cursor-pointer" size={16}/>
+                  </Tooltip.Trigger>
+                  <Tooltip.Portal>
+                    <Tooltip.Content className="TooltipContent" sideOffset={5}>
+                      “UX Olgunluk Düzeyi” grafiğindeki tüm alanların %100 seviyesine ulaşılması, bir organizasyonun UX
+                      olgunluk seviyesinin en üst düzeye eriştiğini gösterir. Bu, kullanıcılardan gelen verilerin
+                      sürekli ve kapsamlı bir şekilde kullanıldığını, test süreçlerinin otomatikleştirildiğini,
+                      inovasyonun ön planda olduğunu, ekibin UX konusunda tam yetkinliğe sahip olduğunu ve tüm tasarım
+                      süreçlerinin optimize edildiğini belirtir. Sonuç olarak, ürün ve hizmetlerin kullanıcı odaklı
+                      mükemmellikte olduğunu ve yüksek ROI getirisi sağladığını gösterir.
+                      <Tooltip.Arrow className="TooltipArrow"/>
+                    </Tooltip.Content>
+                  </Tooltip.Portal>
+                </Tooltip.Root>
+              </Tooltip.Provider>
+            </div>
+
+            {/* Radar Chart */}
             <ResponsiveContainer width="100%" height={300}>
               <RadarChart data={maturityData}>
-                <PolarGrid />
-                <PolarAngleAxis dataKey="subject" />
+                <PolarGrid/>
+                <PolarAngleAxis dataKey="subject"/>
                 <Radar
-                  name="Mevcut Seviye"
-                  dataKey="A"
-                  stroke="#4f46e5"
-                  fill="#4f46e5"
-                  fillOpacity={0.6}
+                    name="Mevcut Seviye"
+                    dataKey="A"
+                    stroke="#4f46e5"
+                    fill="#4f46e5"
+                    fillOpacity={0.6}
                 />
-                <ChartTooltip />
+                <ChartTooltip/>
               </RadarChart>
             </ResponsiveContainer>
           </div>
