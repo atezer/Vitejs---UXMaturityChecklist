@@ -42,7 +42,7 @@ const UXMaturityChecklist = () => {
   const [checklistData, setChecklistData] = useState<ChecklistData>({
     1: {
       tasks: [
-        { id: '1-1', text: 'UX kavramlarını öğrenme: Kullanıcı deneyimi (UX) ile ilgili temel terimleri ve anlayışları kavrama.', checked: false, label: 'Kullanıcı Araştırma' },
+        { id: '1-1', text: 'UX kavramlarını öğrenme: Kullanıcı deneyimi (UX) ile ilgili temel terimleri ve anlayışları kavrama.', checked: false, label: 'Ekip Yetkinliği' },
         { id: '1-2', text: 'Temel kullanıcı ihtiyaçlarını belirleme: Kullanıcıların neye ihtiyaç duyduğunu belirleme ve anlama.', checked: false, label: 'Kullanıcı Araştırma' },
         { id: '1-3', text: 'UX araştırma metodlarını öğrenme: Kullanıcı araştırması için kullanılan yöntem ve teknikleri keşfetme.', checked: false, label: 'Kullanıcı Araştırma' },
       ],
